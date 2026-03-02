@@ -23,22 +23,19 @@ Additionally there is a separate file "Download.ipynb" that demonstrates how to 
 - Downloading (see Download.ipynb)
 
 
-**NOTE: I failed to install pythonnet on python 3.8, use 3.7 if you run into problems**
-
 
 **Installation of TIA Openness**
 
- 1. Install TIA v16 professional, make sure openness is checked [default]
-	[Link to TIA v16 trail](https://support.industry.siemens.com/cs/ww/en/view/109772803)
+ 1. Install TIA v21 professional, make sure openness is checked [default]
  2. Right clik "My computer" -> Manage -> System tools -> Local users and groups - > Groups-> Double click “Siemens TIA Openness” and add your username
  3. Edit the file path in the example file to match your installation of Siemens.Engineering.dll
- 4. [Download and install Python](www.python.org)   (note 3.7 )
+ 4. [Download and install Python](www.python.org)   (note 3.12 )
 
 
 **Option 1, running directly (not recommended)**
 
  1. in the windows search bar type "command prompt" to open Command Promt (CMD)
- 2. Install pythonnet by typing: *pip install pythonnet* (note, python 3.7)
+ 2. Install pythonnet by typing: *pip install pythonnet* (note, python 3.12)
  3. Browse to the location of the example file and type: *Python Openness_examples_python.py*
 
 
@@ -47,9 +44,9 @@ Additionally there is a separate file "Download.ipynb" that demonstrates how to 
  1. [Download Miniconda](https://docs.conda.io/en/latest/miniconda.html)
  2. Open Command Prompt (CMD)
  
- 3. Create a new environment by typing: *conda create --name opennesspy python=3.7* (note 3.7 )
+ 3. Create a new environment by typing: *uv venv -p 3.12* (note 3.12 )
  4. Actiavte the environment: *conda activate opennesspy*
- 5. Install pythonnet by typing: *pip install pythonnet*  Note: installing using *conda install* didnt work.
+ 5. Install pythonnet by typing: *uv pip install pythonnet*
  6. Browse to the location of the example file and type: *Python Openness_examples_python.py*
  7. To leave the environment type *conda deactiave opennesspy*
  
