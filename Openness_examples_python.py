@@ -1,23 +1,46 @@
+try:
+    import clr
+except ImportError:
+    print("clr module not found. Please install pythonnet.")
+    exit()
 
-
-
-import clr
-clr.AddReference('C:\\Program Files\\Siemens\\Automation\\Portal V16\PublicAPI\\V16\\Siemens.Engineering.dll')
+VERSION = 'V21'
+DLL_PATH=f'C:\\Program Files\\Siemens\\Automation\\Portal {VERSION}\\PublicAPI\\{VERSION}\\net48\\Siemens.Engineering.Step7.dll'
+# DLL_PATH="C:\\Program Files\\Siemens\\Automation\\Portal V21\\PublicAPI\\V21\\net48\\Siemens.Engineering.Step7.dll"
+clr.AddReference(DLL_PATH)
 from System.IO import DirectoryInfo, FileInfo
 import Siemens.Engineering as tia
 import Siemens.Engineering.HW.Features as hwf
 import Siemens.Engineering.Compiler as comp
 import os
 
-
+HOME = os.path.expanduser('~')
 # 
 # # Starting TIA and creating project
 # 
 
 
+PROJECT_DIR = os.path.join(HOME, 'TIA')
 #Starting TIA with UI, also possible to start without ui
 print ('Starting TIA with UI')
+
+project_path = DirectoryInfo (PROJECT_DIR)
+project_name = 'PythonTest'
+final_path = os.path.join(PROJECT_DIR, project_name)
+if os.path.exists(final_path):
+    print(f"Project directory {final_path} already exists. Please remove it before running the script.")
+    exit()
+
+
+
 mytia = tia.TiaPortal(tia.TiaPortalMode.WithUserInterface)
+
+try:
+    myproject = mytia.Projects.Create(project_path, project_name)
+except Exception as e:
+    print (e)
+
+
 
 
 
@@ -35,12 +58,6 @@ print (processes)
 
 # Creating a new project. Using try/except in case project allready exists
 
-project_path = DirectoryInfo ('C:\\Jonas\\TIA')
-project_name = 'PythonTest'
-try:
-    myproject = mytia.Projects.Create(project_path, project_name)
-except Exception as e:
-    print (e)
 
 #
 # # Adding HW to the project
@@ -60,7 +77,7 @@ IOnode1 = myproject.Devices.CreateWithItem(IOnode1_mlfb, 'IOnode1', 'IOnode1')
 
 
 print ('Creating HMI1')
-HMI1_mlfb = 'OrderNumber:6AV2 124-0GC01-0AX0/15.1.0.0'
+HMI1_mlfb = 'OrderNumber:6AV2 124-0MC01-0AX0/17.0.0.0'
 HMI1 = myproject.Devices.CreateWithItem(HMI1_mlfb, 'HM1', None)
 
 #ToDo Add start screen to avoid compilation error fo the HMI
@@ -247,4 +264,3 @@ myproject.Save()
 
 
 #mytia.Dispose()
-
